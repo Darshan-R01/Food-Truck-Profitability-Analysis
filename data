@@ -1,0 +1,50 @@
+interface FranchiseSettings {
+  id: string;
+  businessName: string;
+  royaltyFeePercent: number;      // e.g., 5.0 for 5% of gross sales
+  marketingFeePercent: number;    // e.g., 2.0 for 2%
+  merchantFeePercent: number;     // e.g., 2.9 for POS credit card processing
+  merchantFeeFlat: number;        // e.g., 0.30 per transaction
+  targetLaborRatePerHour: number; // Owner/staff hourly cost baseline
+}
+
+interface FixedCost {
+  id: string;
+  category: 'lease' | 'insurance' | 'permits' | 'loan' | 'commissary' | 'software' | 'other';
+  name: string;
+  monthlyAmount: number;
+  isTaxDeductible: boolean;
+}
+
+interface Ingredient {
+  id: string;
+  name: string;
+  purchaseUnit: string;          // e.g., "lb", "kg", "case"
+  costPerUnit: number;
+  yieldPercent: number;          // e.g., 0.90 if 10% lost in prep/trimming
+}
+
+interface RecipeItem {
+  ingredientId: string;
+  quantityRequired: number;       // In purchaseUnit equivalent
+}
+
+interface MenuItem {
+  id: string;
+  name: string;
+  retailPrice: number;
+  recipe: RecipeItem[];
+  spoilageAllowancePercent: number; // Expected shrinkage/waste (e.g., 3.0%)
+}
+
+interface SalesRecord {
+  id: string;
+  timestamp: string;               // ISO 8601
+  locationId: string;
+  grossRevenue: number;
+  transactionCount: number;
+  laborHoursWorked: number;
+  fuelGallonsUsed: number;
+  weatherCondition?: 'clear' | 'rain' | 'extreme_heat' | 'snow';
+  dayOfWeek: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+}
